@@ -1,7 +1,7 @@
 # Three.js Starter
 Courtesy of Bruno Simon of https://threejs-journey.xyz/
 
-I only added the ability to use typescript.p
+I only added the ability to use typescript.
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
