@@ -4,12 +4,28 @@ const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
 const path = require('path')
 
 module.exports = {
-    entry: path.resolve(__dirname, '../src/script.ts'),
+    entry: path.resolve(__dirname, '../src/typescript/script.ts'),
     output: {
-        filename: 'bundle.[contenthash].js',
-        path: path.resolve(__dirname, '../dist')
+        filename: 'js/[contenthash].js',
+        path: path.resolve(__dirname, '../dist'),
+        clean: true,
+    },
+    performance: {
+        hints: true
     },
     devtool: 'source-map',
+    optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all'
+                }
+            }
+        }
+    },
     plugins: [
         new CopyWebpackPlugin({
             patterns: [
@@ -20,7 +36,9 @@ module.exports = {
             template: path.resolve(__dirname, '../src/index.html'),
             minify: true
         }),
-        new MiniCSSExtractPlugin()
+        new MiniCSSExtractPlugin({
+            filename: 'css/[contenthash].min.css'
+        }),
     ],
     resolve: {
         extensions: ['.ts', '.js']
@@ -51,13 +69,15 @@ module.exports = {
                 ]
             },
 
-            // CSS
+            // SCSS
             {
-                test: /\.css$/,
+                test: /\.scss$/,
                 use: [
                     MiniCSSExtractPlugin.loader,
-                    'css-loader'
-                ]
+                    "css-loader",
+                    "sass-loader"
+                ],
+
             },
 
             // Images
