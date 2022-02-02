@@ -10,9 +10,6 @@ module.exports = {
         path: path.resolve(__dirname, '../dist'),
         clean: true,
     },
-    performance: {
-        hints: true
-    },
     devtool: 'source-map',
     optimization: {
         runtimeChunk: 'single',
